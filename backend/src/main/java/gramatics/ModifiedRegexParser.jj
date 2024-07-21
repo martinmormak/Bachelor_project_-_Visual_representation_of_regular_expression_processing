@@ -1,0 +1,69 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(ModifiedRegexParser)
+package gramatics;
+
+import nodes.*;
+
+public class ModifiedRegexParser {
+    public static void main(String[] args) {
+        System.out.println("Normal Regex Parser");
+    }
+}
+
+PARSER_END(ModifiedRegexParser)
+
+TOKEN : {
+   <CHAR: (["a"-"z", "A"-"Z", "0"-"9"])>
+   | < ALTERNATIVE : "|" >
+   | < LEFTROUNDCLOSER : "(" >
+   | < RIGHTROUNDCLOSER : ")" >
+   | < LEFTSQUARECLOSER : "[" >
+   | < RIGHTSQUARECLOSER : "]" >
+   | < LEFTCURLYCLOSER : "{" >
+   | < RIGHTCURLYCLOSER : "}" >
+   | < EOL : "\n" >
+ }
+
+RegexNode input():
+{
+    RegexNode node = null;
+}
+{
+  (<EOL>|<EOF>) { return null; }
+  | node = line() (<EOL>|<EOF>) { return node; }
+}
+
+RegexNode line():
+{
+    RegexNode node = null;
+}
+{
+  node = regex() { return node; }
+}
+
+RegexNode regex():
+{
+    RegexNode node = null;
+    RegexNode node1 = null;
+    RegexNode node2 = null;
+}
+{
+  node1 = expr()
+  ( node2 = expr() { if(node1.getType()!=RegexNodeEnum.EMPTY){node=new RegexNode(RegexNodeEnum.EMPTY,node1);node.addToList(node2);node1=node;}else{node1.addToList(node2);} }
+  | <ALTERNATIVE> node2 = regex() { node = new RegexNode(RegexNodeEnum.ALTERNATIVE); if(node1.getType()==RegexNodeEnum.EMPTY&&node1.getList().size()==1){node1=node1.getList().getFirst();}node.addToList(node1); if(node2.getType()==RegexNodeEnum.EMPTY&&node2.getList().size()==1){node2=node2.getList().getFirst();}node.addToList(node2); node1=node;} )* { if(node1.getType()!=RegexNodeEnum.EMPTY) {return new RegexNode(RegexNodeEnum.EMPTY,node1);} else{return node1;} }
+}
+
+RegexNode expr():
+{
+    Token charToken = null;
+    RegexNode node = null;
+}
+{
+  charToken = <CHAR> { return new RegexNode(RegexNodeEnum.CHARACTER, charToken.image); }
+  | <LEFTROUNDCLOSER> node = regex() <RIGHTROUNDCLOSER> { if(node.getType()==RegexNodeEnum.EMPTY){return new RegexNode(RegexNodeEnum.CLUSTER, node.getList());}else {return new RegexNode(RegexNodeEnum.CLUSTER, node);} }
+  | <LEFTSQUARECLOSER> node = regex() <RIGHTSQUARECLOSER> { if(node.getType()==RegexNodeEnum.EMPTY){return new RegexNode(RegexNodeEnum.VOLUME, node.getList());}else {return new RegexNode(RegexNodeEnum.VOLUME, node);} }
+  | <LEFTCURLYCLOSER> node = regex() <RIGHTCURLYCLOSER> { if(node.getType()==RegexNodeEnum.EMPTY){return new RegexNode(RegexNodeEnum.TRANSPARENCY, node.getList());}else {return new RegexNode(RegexNodeEnum.TRANSPARENCY, node);} }
+}

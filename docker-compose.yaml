@@ -1,0 +1,14 @@
+version: '3'
+services:
+  springapi:
+    image: "mormak-springapi"
+    container_name: springapi
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING.PROFILES.ACTIVE=default
+  ui:
+    image: "mormak-ui"
+    container_name: ui
+    ports:
+      - "3000:3000"

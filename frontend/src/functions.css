@@ -1,0 +1,47 @@
+.transition-function {
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+    margin-right: 1rem;
+    box-sizing: border-box;
+}
+
+.transition-function-functions {
+    overflow: auto;
+    height: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    border-radius: 1rem;
+    background-color: #EDEDED;
+    margin-right: 0.25rem;
+    padding: 1rem;
+}
+
+.transition-function-functions a {
+    margin: 0.25rem 0;
+    padding: 0.25rem 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.token {
+    font-weight: bold;
+    font-size: x-large;
+    color: red;
+    margin: 0;
+    padding: 0;
+}
+
+.transition-function-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.25rem;
+}
+
+.transition-function-buttons button {
+    margin: 0.25rem;
+}
+
+.transition-function-buttons .show-all {
+    margin-top: auto;
+}

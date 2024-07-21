@@ -1,0 +1,11 @@
+.info-field {
+    width: 90%;
+    height: 100%;
+    border-radius: 1rem;
+    background-color: #EDEDED;
+}
+
+.drawing-part-with-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}

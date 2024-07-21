@@ -1,0 +1,11 @@
+.info-field {
+    margin: 0 5%;
+    width: 90%;
+    height: 80%;
+    border-radius: 1rem;
+    background-color: #EDEDED;
+}
+
+.info-table {
+    margin: 0 1.5rem;
+}

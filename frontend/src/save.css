@@ -1,0 +1,9 @@
+.transition-diagram-button {
+    position: absolute;
+    bottom: 0;
+}
+
+.transition-diagram-button button {
+    margin: 0.25rem;
+    width: 100%;
+}
